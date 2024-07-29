@@ -4,7 +4,7 @@ const reviewSchema = new mongoose.Schema({
     userId: String,
     bookId: String,
     content: String,
-    review: Number,
+    score: Number,
     createdAt: {
         type: Date,
         default: Date.now

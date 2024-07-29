@@ -1,12 +1,12 @@
 const User = require("../models/User");
 const mongoose = require("mongoose");
 
-const getUsers = async(req,res) => {
-    try{
+const getUsers = async (req, res) => {
+    try {
         const userList = await User.find();
 
         res.json(userList)
-    }catch(err){
+    } catch (err) {
         console.log(err)
     }
 }
