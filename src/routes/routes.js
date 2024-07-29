@@ -1,37 +1,15 @@
 const express = require("express");
 const routes = express.Router();
-const User = require("../models/User");
+const UserController = require("../controllers/UserControllers")
 
 routes.get("/", (req, res) => {
     res.send("Olá Mundo");
-})
-
-routes.post("/newUser", async (req, res, next) => {
-    try {
-        const email = req.body.email;
-        const password = req.body.password;
-        const userName = req.body.userName;
-        const imgUserUrl = req.body.imgUserUrl;
-        const lists = req.body.lists;
-        const reviews = req.body.reviews;
-
-        const newUser = new User({
-            email: email,
-            password: password,
-            userName: userName,
-            imgUserUrl: imgUserUrl,
-            lists: lists,
-            reviews: reviews,
-            creationDate: new Date()
-        });
-
-        await newUser.save();
-
-        res.status(201).send("Usuário criado com sucesso");
-    } catch (error) {
-        console.error("Erro ao criar usuário:", error);
-        res.status(500).send("Erro ao criar usuário");
-    }
 });
 
-module.exports = routes;
+// USER ROUTES
+routes.get("/getUsers", UserController.getUsers);
+routes.post("/createUser", UserController.createUser);
+routes.delete("/deleteUser/:id", UserController.deleteUser);
+routes.put("/updateUser/:id", UserController.updatedUser);
+
+module.exports = routes; 

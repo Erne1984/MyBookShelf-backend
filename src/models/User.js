@@ -7,7 +7,10 @@ const userSchema = new mongoose.Schema({
     imgUserUrl: String,
     lists: Array,
     reviews: Array,
-    creationDate: Date,
+    creationDate: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 const User = mongoose.model('Users', userSchema);
