@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const ListSchema = new mongoose.Schema({
     userId: String,
     name: String,
-    books: [Array],
+    booksIsbn: [Array],
     public: Boolean,
     createdAt: {
         type: Date,
