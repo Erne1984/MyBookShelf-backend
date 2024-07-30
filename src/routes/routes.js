@@ -3,7 +3,8 @@ const routes = express.Router();
 const UserController = require("../controllers/UserController");
 const BookController = require("../controllers/BookController");
 const ReviewController = require("../controllers/ReviewController");
-const ListController = require("../controllers/ListController")
+const ListController = require("../controllers/ListController");
+const RatingController = require("../controllers/RatingController");
 
 routes.get("/", (req, res) => {
     res.send("Olá Mundo");
@@ -23,6 +24,9 @@ routes.post("/createBookReference", BookController.createBookReference);
 routes.post("/createReviews", ReviewController.createReviews);
 
 // LIST ROUTES
-routes.post("/createList", ListController.createList)
+routes.post("/createList", ListController.createList);
+
+// RATINGS ROUTES
+routes.post("/giveRating", RatingController.giveRating);
 
 module.exports = routes; 

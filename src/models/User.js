@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     imgUserUrl: String,
     lists: [ListSchema],
     reviews: Array,
+    ratingsReference: Array,
     creationDate: {
         type: Date,
         default: Date.now

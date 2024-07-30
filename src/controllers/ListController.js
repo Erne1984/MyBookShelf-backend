@@ -1,8 +1,13 @@
+const mongoose = require("mongoose");
 const User = require("../models/User");
 const List = require("../models/List");
 
 
 const createList = async (req, res) => {
+    const session = await mongoose.startSession();
+    session.startTransaction()
+
+
     try {
         const { userId, listName, booksIsbn, public } = req.body;
 
@@ -24,9 +29,16 @@ const createList = async (req, res) => {
             { new: true }
         );
 
+        session.commitTransaction();
+        session.endSession();
+
         return res.status(201).send(newList);
     } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+
         console.log(error);
+        return res.status(500).send({ error: "Internal server error" })
     }
 }
 
