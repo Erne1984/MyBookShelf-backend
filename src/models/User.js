@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
+const ListSchema = require("./List").schema;
 
 const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     userName: String,
     imgUserUrl: String,
-    lists: Array,
+    lists: [ListSchema],
     reviews: Array,
     creationDate: {
         type: Date,

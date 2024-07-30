@@ -49,7 +49,6 @@ const createBookReference = async (req, res) => {
     }
 }
 
-
 module.exports = {
     queryBookByName,
     createBookReference
