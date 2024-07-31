@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const ListSchema = require("./List").schema;
 
 const userSchema = new mongoose.Schema({
-    email: String,
+    email: { type: String, required: true, unique: true },
     password: String,
     userName: String,
     imgUserUrl: String,

@@ -1,6 +1,7 @@
 const User = require("../models/User");
-const List = require("../models/List")
+const List = require("../models/List");
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const getUsers = async (req, res) => {
     try {
@@ -23,16 +24,25 @@ const createUser = async (req, res) => {
             return res.status(400).send("Dados incompletos.");
         }
 
+        const existingUser = await User.findOne({ email }).session(session);
+        if (existingUser) {
+            await session.abortTransaction();
+            session.endSession();
+            return res.status(409).send("Email já está em uso.");
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         const newUser = new User({
             email,
-            password,
+            password: hashedPassword,
             userName,
             imgUserUrl,
             lists: [],
             reviews
         });
 
-        await newUser.save();
+        await newUser.save({ session });
 
         const defaultLists = [
             { name: "Lidos", booksIsbn: [], public: false, userId: newUser._id },
@@ -40,18 +50,16 @@ const createUser = async (req, res) => {
             { name: "Lendo", booksIsbn: [], public: false, userId: newUser._id }
         ];
 
-        newUser.lists = defaultLists;
-        await newUser.save();
-
-        await List.insertMany(defaultLists);
+        await List.insertMany(defaultLists, { session });
 
         await session.commitTransaction();
         session.endSession();
 
-
-        res.status(201).send("Usuário criado com sucesso");
+        res.status(201).send(newUser);
     } catch (error) {
-        await session.abortTransaction();
+        if (session.inTransaction()) {
+            await session.abortTransaction();
+        }
         session.endSession();
 
         console.error("Erro ao criar usuário:", error);
@@ -104,9 +112,31 @@ const updatedUser = async (req, res) => {
     }
 }
 
+const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const existingUser = await User.findOne({ email });
+        if (!existingUser) {
+            return res.status(404).send("Email não encontrado!");
+        }
+
+        const passwordIsValid = await bcrypt.compare(password, existingUser.password);
+        if (!passwordIsValid) {
+            return res.status(401).send("Senha incorreta");
+        }
+
+        res.status(200).send(existingUser);
+    } catch (error) {
+        console.error("Erro ao tentar realizar o login:", error);
+        res.status(500).send("Erro ao logar usuário");
+    }
+};
+
 module.exports = {
     getUsers,
     createUser,
     deleteUser,
-    updatedUser
+    updatedUser,
+    loginUser
 }
