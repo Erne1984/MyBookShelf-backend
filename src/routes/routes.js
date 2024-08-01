@@ -1,5 +1,6 @@
 const express = require("express");
 const routes = express.Router();
+const verifyToken = require("../middlewares/verifyToken ")
 const UserController = require("../controllers/UserController");
 const BookController = require("../controllers/BookController");
 const ReviewController = require("../controllers/ReviewController");
@@ -12,8 +13,9 @@ routes.get("/", (req, res) => {
 
 // USER ROUTES
 routes.get("/getUsers", UserController.getUsers);
+routes.get("/loginUser", UserController.loginUser);
+routes.get('/profile', verifyToken, UserController.getUserProfile);
 routes.post("/createUser", UserController.createUser);
-routes.post("/loginUser", UserController.loginUser);
 routes.delete("/deleteUser/:id", UserController.deleteUser);
 routes.put("/updateUser/:id", UserController.updatedUser);
 

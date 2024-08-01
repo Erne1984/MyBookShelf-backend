@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-const url = "mongodb+srv://dbAdmin:^891Lj@cluster0.n8emyxs.mongodb.net/MyBookShelf?retryWrites=true&w=majority&appName=Cluster0";
+const url = process.env.MONGODB_URI;
 
 async function connectDb(){
     try{

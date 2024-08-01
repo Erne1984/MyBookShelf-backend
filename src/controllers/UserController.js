@@ -2,6 +2,8 @@ const User = require("../models/User");
 const List = require("../models/List");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const getUsers = async (req, res) => {
     try {
@@ -126,10 +128,32 @@ const loginUser = async (req, res) => {
             return res.status(401).send("Senha incorreta");
         }
 
-        res.status(200).send(existingUser);
+        const token = jwt.sign(
+            { id: existingUser._id, email: existingUser.email },
+            process.env.JWT_SECRET,
+            { expiresIn: '2h' }
+        );
+
+        res.status(200).json({ token });
     } catch (error) {
         console.error("Erro ao tentar realizar o login:", error);
         res.status(500).send("Erro ao logar usuário");
+    }
+};
+
+const getUserProfile = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const user = await User.findById(userId).select('-password');
+
+        if (!user) {
+            return res.status(404).send("Usuário não encontrado.");
+        }
+
+        res.status(200).json(user);
+    } catch (error) {
+        console.error("Erro ao buscar perfil do usuário:", error);
+        res.status(500).send("Erro ao buscar perfil do usuário");
     }
 };
 
@@ -138,5 +162,6 @@ module.exports = {
     createUser,
     deleteUser,
     updatedUser,
-    loginUser
+    loginUser,
+    getUserProfile
 }
