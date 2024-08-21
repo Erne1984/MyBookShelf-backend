@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const db = require("./database/database")
 
@@ -7,7 +8,7 @@ const app = express();
 app.use(express.json());
 app.use("/", routes)
 
-const port = 3030;
+const port = process.env.PORT || 3030;
 
 db();
 
