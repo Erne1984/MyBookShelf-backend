@@ -21,6 +21,7 @@ routes.put("/updateUser/:id", UserController.updatedUser);
 
 // BOOK ROUTES
 routes.get("/queryBook", BookController.queryBookByName);
+routes.get("/getBooks", BookController.getBooks);
 routes.post("/createBookReference", BookController.createBookReference);
 
 // REVIEW ROUTES
