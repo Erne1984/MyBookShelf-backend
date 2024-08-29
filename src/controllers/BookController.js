@@ -61,7 +61,7 @@ const getBooks = async (req, res) => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
                     }
-                    const data = await response.json();
+                    const data = await response.json(); 
                     return data[`ISBN:${isbn}`]; 
                 } catch (error) {
                     console.error(`Error fetching data for ISBN: ${isbn}`, error);
