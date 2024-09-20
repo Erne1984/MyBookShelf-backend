@@ -4,7 +4,7 @@ const ListSchema = require("./List").schema;
 const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: String,
-    userName: String,
+    username: String,
     imgUserUrl: String,
     lists: [ListSchema],
     reviews: Array,

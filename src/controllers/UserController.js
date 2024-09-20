@@ -20,17 +20,24 @@ const createUser = async (req, res) => {
     session.startTransaction();
 
     try {
-        const { email, password, userName, imgUserUrl, reviews } = req.body;
+        const { email, password, username } = req.body;
 
-        if (!email || !password || !userName) {
-            return res.status(400).send("Dados incompletos.");
+        if (!email || !password || !username) {
+            return res.status(400).json({ message: "Dados incompletos." });
         }
 
-        const existingUser = await User.findOne({ email }).session(session);
-        if (existingUser) {
+        const existingEmailUser = await User.findOne({ email }).session(session);
+        if (existingEmailUser) {
             await session.abortTransaction();
             session.endSession();
-            return res.status(409).send("Email já está em uso.");
+            return res.status(409).json({ message: "Email já está em uso." });
+        }
+
+        const existingUsernameUser = await User.findOne({ username }).session(session);
+        if (existingUsernameUser) {
+            await session.abortTransaction();
+            session.endSession();
+            return res.status(409).json({ message: "Nome de usuário já está em uso." });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -38,10 +45,7 @@ const createUser = async (req, res) => {
         const newUser = new User({
             email,
             password: hashedPassword,
-            userName,
-            imgUserUrl,
-            lists: [],
-            reviews
+            username
         });
 
         await newUser.save({ session });
@@ -57,7 +61,7 @@ const createUser = async (req, res) => {
         await session.commitTransaction();
         session.endSession();
 
-        res.status(201).send(newUser);
+        res.status(201).json(newUser);
     } catch (error) {
         if (session.inTransaction()) {
             await session.abortTransaction();
@@ -65,7 +69,7 @@ const createUser = async (req, res) => {
         session.endSession();
 
         console.error("Erro ao criar usuário:", error);
-        res.status(500).send("Erro ao criar usuário");
+        res.status(500).json({ message: "Erro ao criar usuário" });
     }
 };
 
