@@ -1,6 +1,6 @@
-const Review = require("../models/Review");
-const User = require("../models/User");
-const Book = require("../models/Book");
+const Review = require("../../models/Review");
+const User = require("../../models/User");
+const Book = require("../../models/Book");
 
 const createReviews = async (req, res) => {
     const session = await mongoose.startSession();
@@ -43,6 +43,4 @@ const createReviews = async (req, res) => {
     }
 };
 
-module.exports = {
-    createReviews
-};
+module.exports = createReviews;

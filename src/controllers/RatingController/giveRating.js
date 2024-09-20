@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const Rating = require("../models/Rating");
-const User = require("../models/User");
-const Book = require("../models/Book");
+const Rating = require("../../models/Rating");
+const User = require("../../models/User");
+const Book = require("../../models/Book");
 
 const giveRating = async (req, res) => {
     const session = await mongoose.startSession();
@@ -57,6 +57,4 @@ const giveRating = async (req, res) => {
     }
 }
 
-module.exports = {
-    giveRating
-}
+module.exports = giveRating;

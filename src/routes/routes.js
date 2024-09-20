@@ -1,11 +1,12 @@
 const express = require("express");
 const routes = express.Router();
 const verifyToken = require("../middlewares/verifyToken ")
-const UserController = require("../controllers/UserController");
-const BookController = require("../controllers/BookController");
-const ReviewController = require("../controllers/ReviewController");
-const ListController = require("../controllers/ListController");
-const RatingController = require("../controllers/RatingController");
+
+const UserController = require("../controllers/UserController/index");
+const BookController = require("../controllers/BookController/index");
+const ReviewController = require("../controllers/ReviewController/index");
+const ListController = require("../controllers/ListController/index");
+const RatingController = require("../controllers/RatingController/index");
 
 routes.get("/", (req, res) => {
     res.send("Olá Mundo");
@@ -17,7 +18,7 @@ routes.post("/login", UserController.loginUser);
 routes.get('/profile', verifyToken, UserController.getUserProfile);
 routes.post("/createUser", UserController.createUser);
 routes.delete("/deleteUser/:id", UserController.deleteUser);
-routes.put("/updateUser/:id", UserController.updatedUser);
+routes.put("/updateUser/:id", UserController.updateUser);
 
 // BOOK ROUTES
 routes.get("/queryBook", BookController.queryBookByName);

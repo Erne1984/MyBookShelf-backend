@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const User = require("../models/User");
-const List = require("../models/List");
-
+const User = require("../../models/User");
+const List = require("../../models/List");
 
 const createList = async (req, res) => {
     const session = await mongoose.startSession();
@@ -42,6 +41,4 @@ const createList = async (req, res) => {
     }
 }
 
-module.exports = {
-    createList
-}
+module.exports = createList;
