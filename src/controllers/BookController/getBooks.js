@@ -1,3 +1,5 @@
+const Book = require("../../models/Book");
+
 const getBooks = async (req, res) => {
     try {
         const books = await Book.find();

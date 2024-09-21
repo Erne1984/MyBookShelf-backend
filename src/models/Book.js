@@ -2,8 +2,9 @@ const mongoose = require("mongoose");
 
 const bookSchema = new mongoose.Schema({
     isbn: String,
+    bookDescri: String,
     reviews: [String], 
-    ratingsReference: [String], 
+    ratings: [String], 
     score: Number,
 })
 

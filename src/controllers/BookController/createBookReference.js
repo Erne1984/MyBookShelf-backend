@@ -10,6 +10,7 @@ const createBookReference = async (req, res) => {
 
         const newBookReference = new Book({
             isbn,
+            bookDescri: "",
             reviews: [],
             ratings: [],
             score: 0
