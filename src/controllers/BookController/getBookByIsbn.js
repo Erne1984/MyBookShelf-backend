@@ -1,6 +1,7 @@
 const Book = require("../../models/Book");
 
 
+
 const getBookByIsbn = async (req, res) => {
     try {
         const isbnBook = req.query.isbn;
@@ -9,7 +10,9 @@ const getBookByIsbn = async (req, res) => {
             return res.status(400).send({ error: "ISBN is required" });
         }
 
-        const existingBook = await Book.findOne({ isbn: isbnBook });
+        let existingBook = await Book.findOne({
+            $or: [{ isbn_10: isbnBook }, { isbn_13: isbnBook }]
+        });
 
         const response = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbnBook}&format=json&jscmd=data`);
 
@@ -24,6 +27,10 @@ const getBookByIsbn = async (req, res) => {
             return res.status(404).send({ error: "Book not found in API" });
         }
 
+        const { isbn_10, isbn_13 } = bookDataFromAPI.identifiers || {};
+        const isbn10 = isbn_10 ? isbn_10[0] : null;
+        const isbn13 = isbn_13 ? isbn_13[0] : null;
+
         let combinedBookData = { ...bookDataFromAPI };
 
         if (existingBook) {
@@ -33,7 +40,8 @@ const getBookByIsbn = async (req, res) => {
             combinedBookData.score = existingBook.score;
         } else {
             const newBookReference = new Book({
-                isbn: isbnBook,
+                isbn_10: isbn10,
+                isbn_13: isbn13,
                 bookDescri: "",
                 reviews: [],
                 ratings: [],

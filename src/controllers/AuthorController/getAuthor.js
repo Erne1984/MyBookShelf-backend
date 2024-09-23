@@ -2,7 +2,7 @@ const Author = require("../../models/Author");
 
 const getAuthorPhoto = async (authorKey) => {
     try {
-        const authorPhotoUrl = `https://covers.openlibrary.org/a/olid/${authorKey}-S.jpg`;
+        const authorPhotoUrl = `https://covers.openlibrary.org/a/olid/${authorKey}-M.jpg`;
 
         const response = await fetch(authorPhotoUrl);
 

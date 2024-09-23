@@ -5,13 +5,16 @@ const getBooks = async (req, res) => {
         const books = await Book.find();
 
         const bookDataPromises = books.map(async (book) => {
-            const isbn = book.isbn;
+            const isbn = book.isbn_13 || book.isbn_10;
+
             if (isbn) {
                 try {
                     const response = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`);
+                    
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
                     }
+
                     const data = await response.json();
                     const bookData = data[`ISBN:${isbn}`];
 
@@ -25,6 +28,7 @@ const getBooks = async (req, res) => {
                     return null;
                 }
             }
+
             return null;
         });
 

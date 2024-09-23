@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
 const bookSchema = new mongoose.Schema({
-    isbn: String,
+    isbn_10: String,
+    isbn_13: String,
     bookDescri: String,
     reviews: [String], 
     ratings: [String], 
@@ -10,4 +11,4 @@ const bookSchema = new mongoose.Schema({
 
 const Book = mongoose.model("Books", bookSchema);
 
-module.exports = Book
+module.exports = Book;
