@@ -7,6 +7,7 @@ const BookController = require("../controllers/BookController/index");
 const ReviewController = require("../controllers/ReviewController/index");
 const ListController = require("../controllers/ListController/index");
 const RatingController = require("../controllers/RatingController/index");
+const AuthorController = require("../controllers/AuthorController/index");
 
 routes.get("/", (req, res) => {
     res.send("Olá Mundo");
@@ -25,6 +26,9 @@ routes.get("/queryBook", BookController.queryBookByName);
 routes.get("/getBooks", BookController.getBooks);
 routes.get("/getBookIsbn", BookController.getBookByIsbn);
 routes.post("/createBookReference", BookController.createBookReference);
+
+// AUTHOR ROUTES
+routes.get("/getAuthor", AuthorController.getAuthor);
 
 // REVIEW ROUTES
 routes.post("/createReviews", ReviewController.createReviews);
