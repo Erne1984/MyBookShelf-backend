@@ -5,7 +5,7 @@ const getBooks = async (req, res) => {
         const books = await Book.find();
 
         const bookDataPromises = books.map(async (book) => {
-            const isbn = book.isbn_13 || book.isbn_10;
+            const isbn = book.identifiers.isbn_13[0] || book.identifiers.isbn_10[0];
 
             if (isbn) {
                 try {
@@ -19,10 +19,11 @@ const getBooks = async (req, res) => {
                     const bookData = data[`ISBN:${isbn}`];
 
                     if (bookData) {
-                        bookData.score = book.score;
+                        return {
+                            ...bookData,
+                            score: book.score
+                        };
                     }
-
-                    return bookData;
                 } catch (error) {
                     console.error(`Error fetching data for ISBN: ${isbn}`, error);
                     return null;

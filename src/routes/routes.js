@@ -25,10 +25,11 @@ routes.put("/updateUser/:id", UserController.updateUser);
 routes.get("/queryBook", BookController.queryBookByName);
 routes.get("/getBooks", BookController.getBooks);
 routes.get("/getBookIsbn", BookController.getBookByIsbn);
-routes.post("/createBookReference", BookController.createBookReference);
+routes.post("/createBook", BookController.createBook);
 
 // AUTHOR ROUTES
 routes.get("/getAuthor", AuthorController.getAuthor);
+routes.get("/getAuthorWorks", AuthorController.getAuthorWorks);
 
 // REVIEW ROUTES
 routes.post("/createReviews", ReviewController.createReviews);

@@ -1,10 +1,10 @@
-const createBookReference = require("./createBookReference");
+const createBook = require("./createBook");
 const getBookByIsbn = require("./getBookByIsbn");
 const getBooks = require("./getBooks");
 const queryBookByName = require("./queryBookByName");
 
 module.exports = {
-    createBookReference,
+    createBook,
     getBookByIsbn,
     getBooks,
     queryBookByName

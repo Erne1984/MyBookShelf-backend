@@ -1,11 +1,30 @@
 const mongoose = require("mongoose");
 
 const bookSchema = new mongoose.Schema({
-    isbn_10: String,
-    isbn_13: String,
+    authors: [
+        {
+            name: String,
+            key: String
+        }
+    ],
+    identifiers: {
+        "isbn_10": [],
+        "isbn_13": [],
+        "openlibrary": []
+    },
+    title: String,
+    numberOfPages: Number,
     bookDescri: String,
-    reviews: [String], 
-    ratings: [String], 
+    publishers: [],
+    publish_date: String,
+    subjects: [String] || undefined,
+    cover: {
+        small: String,
+        medium: String,
+        large: String
+    },
+    reviews: [String],
+    ratings: [String],
     score: Number,
 })
 

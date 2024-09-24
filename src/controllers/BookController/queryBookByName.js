@@ -1,4 +1,4 @@
-const openLibraryApi = "https://openlibrary.org/search.json?q="
+const openLibraryApi = "https://openlibrary.org/search.json?q=";
 
 const queryBookByName = async (req, res) => {
     try {
@@ -23,4 +23,4 @@ const queryBookByName = async (req, res) => {
     }
 };
 
-module.exports = queryBookByName
+module.exports = queryBookByName;
