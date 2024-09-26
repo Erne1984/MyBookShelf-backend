@@ -1,67 +1,95 @@
-const createBook = require('./createBook');
 const Book = require("../../models/Book");
 
 const getBookByIsbn = async (req, res) => {
     try {
-        const isbnBook = req.query.isbn;
+        const bookIdentifier = req.query.bookIdentifier;
 
-        if (!isbnBook) {
+        if (!bookIdentifier) {
             return res.status(400).send({ error: "ISBN is required" });
         }
 
         let existingBook = await Book.findOne({
-            $or: [{ "identifiers.isbn_10": isbnBook }, { "identifiers.isbn_13": isbnBook }]
+            $or: [
+                { "identifiers.isbn_10": bookIdentifier },
+                { "identifiers.isbn_13": bookIdentifier },
+                { "identifiers.openlibrary": bookIdentifier }
+            ]
         });
 
         if (existingBook) {
             return res.status(200).send(existingBook);
         }
 
-        const response = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbnBook}&format=json&jscmd=data`);
+        const response = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${bookIdentifier}&format=json&jscmd=data`);
 
         if (!response.ok) {
             throw new Error("Network response was not ok " + response.statusText);
         }
 
         const apiData = await response.json();
-        const bookDataFromAPI = apiData[`ISBN:${isbnBook}`];
+        const bookDataFromAPI = apiData[`ISBN:${bookIdentifier}`];
 
         if (!bookDataFromAPI) {
             return res.status(404).send({ error: "Book not found in API" });
         }
 
-        const { title, number_of_pages, publish_date, publishers, subjects, cover, identifiers } = bookDataFromAPI;
-        const coverImages = cover ? {
-            small: cover.small ? `https://covers.openlibrary.org/b/id/${cover.small}-S.jpg` : undefined,
-            medium: cover.medium ? `https://covers.openlibrary.org/b/id/${cover.medium}-M.jpg` : undefined,
-            large: cover.large ? `https://covers.openlibrary.org/b/id/${cover.large}-L.jpg` : undefined,
+        const coverImages = bookDataFromAPI.cover ? {
+            small: bookDataFromAPI.cover.small ? `https://covers.openlibrary.org/b/id/${bookDataFromAPI.cover.small}-S.jpg` : undefined,
+            medium: bookDataFromAPI.cover.medium ? `https://covers.openlibrary.org/b/id/${bookDataFromAPI.cover.medium}-M.jpg` : undefined,
+            large: bookDataFromAPI.cover.large ? `https://covers.openlibrary.org/b/id/${bookDataFromAPI.cover.large}-L.jpg` : undefined,
         } : {};
+
+        const identifiers = bookDataFromAPI.identifiers ? {
+            isbn_10: bookDataFromAPI.identifiers.isbn_10 ? bookDataFromAPI.identifiers.isbn_10[0] : "",
+            isbn_13: bookDataFromAPI.identifiers.isbn_13 ? bookDataFromAPI.identifiers.isbn_13[0] : "",
+            openlibrary: bookDataFromAPI.identifiers.openlibrary ? bookDataFromAPI.identifiers.openlibrary[0] : ""
+        } : {};
+
+        const subjects = bookDataFromAPI.subjects ? bookDataFromAPI.subjects.map(subject => ({
+            name: subject.name,
+            url: subject.url
+        })) : [];
 
         const bookData = {
             authors: bookDataFromAPI.authors ? bookDataFromAPI.authors.map(author => ({
                 name: author.name,
                 key: author.key
             })) : [],
-            identifiers: {
-                isbn_10: identifiers.isbn_10 || [],
-                isbn_13: identifiers.isbn_13 || [],
-                openlibrary: identifiers.openlibrary || []
-            },
-            title,
-            numberOfPages: number_of_pages || null,
+            identifiers: identifiers,
+            title: bookDataFromAPI.title,
+            numberOfPages: bookDataFromAPI.number_of_pages || null,
             bookDescri: bookDataFromAPI.description || "",
-            publishers: publishers || [],
-            publish_date: publish_date || "",
-            subjects: subjects || [],
+            publishers: bookDataFromAPI.publishers || [],
+            publish_date: bookDataFromAPI.publish_date || "",
+            subjects: subjects,
             cover: coverImages,
             reviews: [],
             ratings: [],
             score: 0
         };
 
-        const newBookReference = await createBook(bookData);
+        const newBookReference = new Book({
+            authors: bookData.authors,
+            identifiers: {
+                isbn_10: [identifiers.isbn_10],
+                isbn_13: [identifiers.isbn_13],
+                openlibrary: [identifiers.openlibrary]
+            },
+            title: bookData.title,
+            numberOfPages: bookData.numberOfPages,
+            bookDescri: bookData.bookDescri,
+            publishers: bookData.publishers,
+            publish_date: bookData.publish_date,
+            subjects: bookData.subjects,
+            cover: bookData.cover,
+            reviews: [],
+            ratings: [],
+            score: 0
+        });
 
-        res.status(200).send(newBookReference);
+        await newBookReference.save();
+
+        res.status(201).send(newBookReference);
 
     } catch (error) {
         console.error("Error fetching or saving book data: ", error);

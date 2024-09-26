@@ -17,7 +17,10 @@ const bookSchema = new mongoose.Schema({
     bookDescri: String,
     publishers: [],
     publish_date: String,
-    subjects: [String] || undefined,
+    subjects: [{
+        "name": String,
+        "url": String
+    }] || undefined,
     cover: {
         small: String,
         medium: String,
