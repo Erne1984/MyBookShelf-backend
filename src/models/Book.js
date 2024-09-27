@@ -4,7 +4,8 @@ const bookSchema = new mongoose.Schema({
     authors: [
         {
             name: String,
-            key: String
+            key: String,
+            url: String
         }
     ],
     identifiers: {

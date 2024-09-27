@@ -2,7 +2,7 @@ const Book = require("../../models/Book");
 
 const getBookByIsbn = async (req, res) => {
     try {
-        const bookIdentifier = req.query.bookIdentifier;
+        const bookIdentifier = req.query.isbn;
 
         if (!bookIdentifier) {
             return res.status(400).send({ error: "ISBN is required" });
@@ -33,27 +33,35 @@ const getBookByIsbn = async (req, res) => {
             return res.status(404).send({ error: "Book not found in API" });
         }
 
-        const coverImages = bookDataFromAPI.cover ? {
-            small: bookDataFromAPI.cover.small ? `https://covers.openlibrary.org/b/id/${bookDataFromAPI.cover.small}-S.jpg` : undefined,
-            medium: bookDataFromAPI.cover.medium ? `https://covers.openlibrary.org/b/id/${bookDataFromAPI.cover.medium}-M.jpg` : undefined,
-            large: bookDataFromAPI.cover.large ? `https://covers.openlibrary.org/b/id/${bookDataFromAPI.cover.large}-L.jpg` : undefined,
-        } : {};
-
         const identifiers = bookDataFromAPI.identifiers ? {
             isbn_10: bookDataFromAPI.identifiers.isbn_10 ? bookDataFromAPI.identifiers.isbn_10[0] : "",
             isbn_13: bookDataFromAPI.identifiers.isbn_13 ? bookDataFromAPI.identifiers.isbn_13[0] : "",
             openlibrary: bookDataFromAPI.identifiers.openlibrary ? bookDataFromAPI.identifiers.openlibrary[0] : ""
         } : {};
 
-        const subjects = bookDataFromAPI.subjects ? bookDataFromAPI.subjects.map(subject => ({
-            name: subject.name,
-            url: subject.url
-        })) : [];
+
+        const coverImages = identifiers.isbn_10[0] ? {
+            small: `https://covers.openlibrary.org/b/isbn/${identifiers.isbn_10}-S.jpg`,
+            medium: `https://covers.openlibrary.org/b/isbn/${identifiers.isbn_10}-M.jpg`,
+            large: `https://covers.openlibrary.org/b/isbn/${identifiers.isbn_10}-L.jpg`
+        } : {
+            small: `https://covers.openlibrary.org/b/isbn/${identifiers.isbn_13}-S.jpg`,
+            medium: `https://covers.openlibrary.org/b/isbn/${identifiers.isbn_13}-M.jpg`,
+            large: `https://covers.openlibrary.org/b/isbn/${identifiers.isbn_13}-L.jpg`
+        };
+
+        const subjects = bookDataFromAPI.subjects
+            ? bookDataFromAPI.subjects.map(subject => ({
+                name: subject.name || subject,
+                url: subject.url || ""
+            }))
+            : [];
 
         const bookData = {
             authors: bookDataFromAPI.authors ? bookDataFromAPI.authors.map(author => ({
                 name: author.name,
-                key: author.key
+                key: author.key,
+                url: author.url
             })) : [],
             identifiers: identifiers,
             title: bookDataFromAPI.title,

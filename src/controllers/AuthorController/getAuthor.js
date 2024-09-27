@@ -27,10 +27,11 @@ const getAuthor = async (req, res) => {
         const authorData = await response.json();
 
         const authorImg = await getAuthorPhoto(authorKey);
-
         authorData.photo = authorImg;
 
-        const existingAuthorReference = await Author.findOne({ keyOpenLibrary: authorKey })
+        const bio = authorData.bio && authorData.bio.value ? authorData.bio.value : '';
+
+        const existingAuthorReference = await Author.findOne({ keyOpenLibrary: authorKey });
 
         if (existingAuthorReference) {
             authorData.followers = existingAuthorReference.followers;
@@ -39,11 +40,10 @@ const getAuthor = async (req, res) => {
             const newAuthorReference = new Author({
                 keyOpenLibrary: authorKey,
                 followers: [],
-                bio: authorData.bio
-            })
+                bio: bio 
+            });
 
             await newAuthorReference.save();
-
             authorData.followers = newAuthorReference.followers;
         }
 
@@ -53,5 +53,6 @@ const getAuthor = async (req, res) => {
         res.status(500).send({ error: err.message });
     }
 };
+
 
 module.exports = getAuthor;
