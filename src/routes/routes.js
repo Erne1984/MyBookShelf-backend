@@ -15,8 +15,9 @@ routes.get("/", (req, res) => {
 
 // USER ROUTES
 routes.get("/getUsers", UserController.getUsers);
-routes.post("/login", UserController.loginUser);
 routes.get('/profile', verifyToken, UserController.getUserProfile);
+routes.get("/user/id", verifyToken, UserController.getUserId)
+routes.post("/login", UserController.loginUser);
 routes.post("/createUser", UserController.createUser);
 routes.delete("/deleteUser/:id", UserController.deleteUser);
 routes.put("/updateUser/:id", UserController.updateUser);
