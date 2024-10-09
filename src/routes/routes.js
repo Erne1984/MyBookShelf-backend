@@ -9,6 +9,9 @@ const ListController = require("../controllers/ListController/index");
 const RatingController = require("../controllers/RatingController/index");
 const AuthorController = require("../controllers/AuthorController/index");
 
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+
 routes.get("/", (req, res) => {
     res.send("Olá Mundo");
 });
@@ -19,6 +22,7 @@ routes.get('/profile', verifyToken, UserController.getUserProfile);
 routes.get("/user/id", verifyToken, UserController.getUserId)
 routes.post("/login", UserController.loginUser);
 routes.post("/createUser", UserController.createUser);
+routes.post("/uploadImage", verifyToken, upload.single('image'), UserController.uploadUserImg);
 routes.delete("/deleteUser/:id", UserController.deleteUser);
 routes.put("/updateUser/:id", UserController.updateUser);
 

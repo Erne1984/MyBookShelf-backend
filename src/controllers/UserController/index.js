@@ -5,6 +5,7 @@ const updateUser = require("./updateUser");
 const loginUser = require("./loginUser");
 const getUserProfile = require("./getUserProfile");
 const getUserId = require("./getUserId");
+const uploadUserImg = require("./uploadUserImg");
 
 module.exports = {
     getUsers,
@@ -13,5 +14,6 @@ module.exports = {
     updateUser,
     loginUser,
     getUserProfile,
-    getUserId
+    getUserId,
+    uploadUserImg
 };
