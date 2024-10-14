@@ -39,14 +39,6 @@ const createUser = async (req, res) => {
 
         await newUser.save({ session });
 
-        const defaultLists = [
-            { name: "Lidos", booksIsbn: [], public: false, userId: newUser._id },
-            { name: "Pretendo Ler", booksIsbn: [], public: false, userId: newUser._id },
-            { name: "Lendo", booksIsbn: [], public: false, userId: newUser._id }
-        ];
-
-        await List.insertMany(defaultLists, { session });
-
         await session.commitTransaction();
         session.endSession();
 
