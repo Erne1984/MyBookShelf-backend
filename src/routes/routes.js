@@ -10,7 +10,8 @@ const RatingController = require("../controllers/RatingController/index");
 const AuthorController = require("../controllers/AuthorController/index");
 
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 routes.get("/", (req, res) => {
     res.send("Olá Mundo");

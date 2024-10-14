@@ -9,6 +9,12 @@ const userSchema = new mongoose.Schema({
     lists: [ListSchema],
     reviews: Array,
     ratingsReference: Array,
+    friendsReference: [],
+    dateBirth: Date,
+    country: String,
+    city: String,
+    gender: String,
+    aboutMe: String,
     creationDate: {
         type: Date,
         default: Date.now
