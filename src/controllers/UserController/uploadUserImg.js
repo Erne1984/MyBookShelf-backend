@@ -9,20 +9,27 @@ const uploadUserImg = async (req, res) => {
       return res.status(404).json({ message: 'Usuário não encontrado' });
     }
 
-    const result = await cloudinary.uploader.upload_stream(
-      {
-        folder: 'user_profiles',
-        public_id: user._id.toString(),
-        overwrite: true,
-      },
-      (error, result) => {
-        if (error) {
-          console.error('Erro ao fazer upload da imagem:', error);
-          return res.status(500).json({ error: 'Erro ao fazer upload da imagem' });
-        }
-        return result;
-      }
-    ).end(req.file.buffer);
+    const uploadToCloudinary = () => {
+      return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          {
+            folder: 'user_profiles',
+            public_id: user._id.toString(),
+            overwrite: true,
+          },
+          (error, result) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(result);
+            }
+          }
+        );
+        stream.end(req.file.buffer);
+      });
+    };
+
+    const result = await uploadToCloudinary(); 
 
     user.imgUserUrl = result.secure_url;
     await user.save();
