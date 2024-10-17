@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
     city: String,
     gender: String,
     aboutMe: String,
+    isModerator: Boolean,
     creationDate: {
         type: Date,
         default: Date.now

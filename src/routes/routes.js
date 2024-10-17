@@ -10,6 +10,7 @@ const RatingController = require("../controllers/RatingController/index");
 const AuthorController = require("../controllers/AuthorController/index");
 
 const multer = require('multer');
+const isModerator = require("../middlewares/isModerator");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -32,6 +33,7 @@ routes.get("/queryBook", BookController.queryBookByName);
 routes.get("/getBooks", BookController.getBooks);
 routes.get("/getBookIsbn", BookController.getBookByIsbn);
 routes.post("/createBook", BookController.createBook);
+routes.post("/editBookDescri", BookController.editBookDescri);
 
 // AUTHOR ROUTES
 routes.get("/getAuthor", AuthorController.getAuthor);
