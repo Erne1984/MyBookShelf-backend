@@ -18,20 +18,17 @@ const bookSchema = new mongoose.Schema({
     bookDescri: String,
     publishers: [],
     publish_date: String,
-    subjects: [{
-        "name": String,
-        "url": String
-    }] || undefined,
+    subjects: [{ "name": String, "url": String }] || undefined,
     cover: {
         small: String,
         medium: String,
         large: String
     },
-    reviews: [String],
-    ratings: [String],
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+    ratings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rating' }],
     score: Number,
-})
+});
 
-const Book = mongoose.model("Books", bookSchema);
+const Book = mongoose.model("Book", bookSchema);
 
 module.exports = Book;

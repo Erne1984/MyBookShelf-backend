@@ -6,13 +6,13 @@ const userSchema = new mongoose.Schema({
     password: String,
     username: String,
     imgUserUrl: String,
-    toReadList: [],
-    readingList: [],
-    readedList: [],
+    toReadList: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }],
+    readingList: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }],
+    readedList: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }],
     lists: [ListSchema],
-    reviews: Array,
-    ratingsReference: Array,
-    friendsReference: [],
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+    ratingsReference: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rating' }],
+    friendsReference: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     dateBirth: Date,
     country: String,
     city: String,
@@ -23,8 +23,8 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
-})
+});
 
-const User = mongoose.model('Users', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

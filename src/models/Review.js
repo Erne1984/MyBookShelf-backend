@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const reviewSchema = new mongoose.Schema({
-    userId: String,
-    bookId: String,
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, 
+    bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Book' },  
     content: String,
-    score: Number,
+    ratingId: { type: mongoose.Schema.Types.ObjectId, ref: 'Rating' },  
     createdAt: {
         type: Date,
         default: Date.now
@@ -13,4 +13,4 @@ const reviewSchema = new mongoose.Schema({
 
 const Review = mongoose.model('Review', reviewSchema);
 
-module.exports = Review
+module.exports = Review;
