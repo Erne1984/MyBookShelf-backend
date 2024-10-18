@@ -46,6 +46,7 @@ routes.post("/createReviews", ReviewController.createReviews);
 routes.post("/createList", ListController.createList);
 
 // RATINGS ROUTES
+routes.get("/getBookAverage", RatingController.getBookAverage);
 routes.post("/giveRating", RatingController.giveRating);
 
 module.exports = routes; 
