@@ -43,6 +43,7 @@ routes.get("/getAuthorWorks", AuthorController.getAuthorWorks);
 routes.post("/createReviews", ReviewController.createReviews);
 routes.get("/getBookReviews", ReviewController.getBookReviews);
 routes.get("/getUserReview", ReviewController.getUserReview);
+routes.get("/updateReview", ReviewController.updateReview);
 
 // LIST ROUTES
 routes.post("/createList", ListController.createList);
