@@ -1,4 +1,5 @@
 const Review = require("../../models/Review");
+const Rating = require("../../models/Rating")
 
 const updateReview = async (req, res) => {
     try {
@@ -15,7 +16,7 @@ const updateReview = async (req, res) => {
         }
 
         if (content) userReview.content = content;
-        if (score) userReview.score = score;
+        if (score) await Rating.findByIdAndUpdate(userReview.ratingId, { score: score });
 
         await userReview.save();
 

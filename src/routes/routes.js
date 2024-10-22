@@ -43,7 +43,7 @@ routes.get("/getAuthorWorks", AuthorController.getAuthorWorks);
 routes.post("/createReviews", ReviewController.createReviews);
 routes.get("/getBookReviews", ReviewController.getBookReviews);
 routes.get("/getUserReview", ReviewController.getUserReview);
-routes.get("/updateReview", ReviewController.updateReview);
+routes.put("/updateReview", ReviewController.updateReview);
 
 // LIST ROUTES
 routes.post("/createList", ListController.createList);
@@ -51,6 +51,7 @@ routes.post("/createList", ListController.createList);
 // RATINGS ROUTES
 routes.get("/getBookAverage", RatingController.getBookAverage);
 routes.get("/getBookRatings", RatingController.getBookRatings);
+routes.get("/getUserRating", RatingController.getUserRating);
 routes.post("/giveRating", RatingController.giveRating);
 
 module.exports = routes; 
