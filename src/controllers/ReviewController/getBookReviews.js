@@ -10,7 +10,7 @@ const getBookReviews = async (req, res) => {
             .exec();
 
         if (!bookReviews || bookReviews.length === 0) {
-            return res.status(404).send("Livro não encontrado ou sem reviews");
+            return res.status(204).send("Livro não encontrado ou sem reviews");
         }
 
         const formattedReviews = bookReviews.map(review => ({

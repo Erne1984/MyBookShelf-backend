@@ -14,7 +14,8 @@ const getBookAverage = async (req, res) => {
         const ratings = await Rating.find({ bookId: bookId });
 
         if (ratings.length === 0) {
-            return res.status(404).send({ error: "No ratings found for this book." });
+            const averageRating = 0;
+            return res.status(200).send({ averageRating });
         }
 
         const totalRating = ratings.reduce((sum, rating) => sum + rating.score, 0);

@@ -2,7 +2,7 @@ const Book = require("../../models/Book");
 
 const getBooks = async (req, res) => {
     try {
-        const books = await Book.find();
+        const books = await Book.find().limit(100);
 
         res.status(200).send(books);
     } catch (err) {

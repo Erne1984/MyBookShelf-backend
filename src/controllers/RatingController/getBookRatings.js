@@ -13,10 +13,10 @@ const getBookRatings = async (req, res) => {
         const ratings = await Rating.find({ bookId: bookId });
 
         if (ratings.length === 0) {
-            return res.status(404).send({ error: "No ratings found for this book." });
+            return res.status(200).send([]);
         }
 
-        res.status(200).send( ratings );
+        res.status(200).send(ratings);
     } catch (error) {
         console.error(error);
         res.status(500).send({ error: "Internal server error" });

@@ -11,7 +11,7 @@ const getUserReview = async (req, res) => {
         const userReview = await Review.findOne({ bookId: bookId, userId: userId });
 
         if (!userReview) {
-            return res.status(404).send("Usuário não tem review deste livro.");
+            return res.status(204).send("Usuário não tem review deste livro.");
         }
 
         res.status(200).send(userReview);
