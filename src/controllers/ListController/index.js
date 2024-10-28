@@ -1,5 +1,11 @@
-const createList = require('./createList');
+const createList = require("./createList");
+const getUserList = require("./getUserLists");
+const getUserReadingStatus = require("./getUserReadingStatus");
+const addUserBookStatus = require("./addUserBookStatus");
 
 module.exports = {
-    createList
+    addUserBookStatus,
+    createList,
+    getUserList,
+    getUserReadingStatus
 }

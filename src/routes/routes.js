@@ -46,6 +46,9 @@ routes.get("/getUserReview", ReviewController.getUserReview);
 routes.put("/updateReview", ReviewController.updateReview);
 
 // LIST ROUTES
+routes.get("/getUserLists", ListController.getUserList);
+routes.get("/getUserReadingStatus", ListController.getUserReadingStatus);
+routes.post("/addUserBookStatus", ListController.addUserBookStatus);
 routes.post("/createList", ListController.createList);
 
 // RATINGS ROUTES

@@ -5,7 +5,7 @@ const db = require("./database/database");
 const routes = require("./routes/routes");
 const cors = require('cors');
 const app = express();
-
+ 
 
 app.use(cors({
     origin: 'http://localhost:5173'
