@@ -2,6 +2,7 @@ const createList = require("./createList");
 const getUserList = require("./getUserLists");
 const getUserReadingStatus = require("./getUserReadingStatus");
 const addUserBookStatus = require("./addUserBookStatus");
+const addBookToList = require("./addBookToList");
 const deleteBookFromShelfs = require("./deleteBookFromShelfs");
 
 module.exports = {
@@ -9,5 +10,6 @@ module.exports = {
     createList,
     getUserList,
     getUserReadingStatus,
-    deleteBookFromShelfs
+    deleteBookFromShelfs,
+    addBookToList
 }
