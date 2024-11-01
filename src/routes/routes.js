@@ -52,6 +52,7 @@ routes.post("/addUserBookStatus", ListController.addUserBookStatus);
 routes.post("/addBookToList", ListController.addBookToList);
 routes.post("/createList", ListController.createList);
 routes.delete("/deleteBookFromShelfs", ListController.deleteBookFromShelfs);
+routes.delete("/removeBookOfList", ListController.removeBookOfList);
 
 // RATINGS ROUTES
 routes.get("/getBookAverage", RatingController.getBookAverage);

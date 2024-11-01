@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const User = require("../../models/User");
-const List = require("../../models/List");
 const Book = require("../../models/Book");
+const List = require("../../models/List");
 
-const addBookToList = async (req, res) => {
+const removeBookOfList = async (req, res) => {
     const session = await mongoose.startSession();
     session.startTransaction();
 
@@ -25,24 +25,25 @@ const addBookToList = async (req, res) => {
             return res.status(404).send({ error: "Book not found" });
         }
 
-        if (list.books.includes(bookId)) {
-            return res.status(400).send({ error: "Book already in the list" });
+        const bookIndex = list.books.indexOf(bookId);
+        if (bookIndex > -1) {
+            list.books.splice(bookIndex, 1);
+        } else {
+            return res.status(404).send({ error: "Book not found in this list" });
         }
 
-        list.books.push(bookId);
         await list.save({ session });
-
         await session.commitTransaction();
         session.endSession();
 
-        return res.status(200).send({ message: "Book added to the list successfully" });
+        res.status(200).send({ message: "Book removed from list successfully" });
+
     } catch (error) {
         await session.abortTransaction();
         session.endSession();
-
         console.error(error);
-        return res.status(500).send({ error: "Internal server error" });
+        res.status(500).send({ error: "Error in removing book from list" });
     }
-};
+}
 
-module.exports = addBookToList;
+module.exports = removeBookOfList;
