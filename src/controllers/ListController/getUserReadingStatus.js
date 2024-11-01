@@ -5,8 +5,6 @@ const getUserReadingStatus = async (req, res) => {
     try {
         const { bookId, userId } = req.query;
 
-        console.log(bookId + " " + userId)
-
         if (!bookId) return res.status(400).send("bookId not received!");
         if (!userId) return res.status(400).send("userId not received!");
 
@@ -27,7 +25,7 @@ const getUserReadingStatus = async (req, res) => {
         } else if (user.readedList && user.readedList.includes(bookId)) {
             status = "Lido";
         }
-
+        
         res.status(200).json( status );
     } catch (error) {
         console.error(error);
