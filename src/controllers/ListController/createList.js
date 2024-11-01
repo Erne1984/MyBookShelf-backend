@@ -8,14 +8,14 @@ const createList = async (req, res) => {
 
 
     try {
-        const { userId, listName, booksIsbn, public } = req.body;
+        const { userId, listname, booksIsbn, public } = req.body;
 
         const currentlyUser = await User.findById(userId);
         if (!currentlyUser) return res.status(404).send({ error: "User not found!" });
 
         const newList = List({
             userId: userId,
-            listName: listName,
+            name: listname,
             booksIsbn: booksIsbn,
             public: public,
         })
