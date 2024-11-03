@@ -32,6 +32,7 @@ routes.put("/updateUser/:id", UserController.updateUser);
 routes.get("/queryBook", BookController.queryBookByName);
 routes.get("/getBooks", BookController.getBooks);
 routes.get("/getBookIsbn", BookController.getBookByIsbn);
+routes.post("/getBooksByIds", BookController.getBooksByIds);
 routes.post("/createBook", BookController.createBook);
 routes.post("/editBookDescri", BookController.editBookDescri);
 
