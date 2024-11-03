@@ -44,6 +44,7 @@ routes.post("/createReviews", ReviewController.createReviews);
 routes.get("/getBookReviews", ReviewController.getBookReviews);
 routes.get("/getUserReview", ReviewController.getUserReview);
 routes.put("/updateReview", ReviewController.updateReview);
+routes.delete("/deleteReview", ReviewController.deleteReview);
 
 // LIST ROUTES
 routes.get("/getUserLists", ListController.getUserList);
