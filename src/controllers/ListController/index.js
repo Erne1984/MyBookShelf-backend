@@ -5,6 +5,9 @@ const addUserBookStatus = require("./addUserBookStatus");
 const addBookToList = require("./addBookToList");
 const deleteBookFromShelfs = require("./deleteBookFromShelfs");
 const removeBookOfList = require("./removeBookOfList");
+const getAllBooksUser = require("./getAllBooksUser");
+const getCustomListsUser = require("./getCustomListsUser");
+const getBooksFromCustomList = require("./getBooksFromCustomList");
 
 module.exports = {
     addUserBookStatus,
@@ -13,5 +16,8 @@ module.exports = {
     getUserReadingStatus,
     deleteBookFromShelfs,
     addBookToList, 
-    removeBookOfList
+    removeBookOfList,
+    getAllBooksUser,
+    getCustomListsUser,
+    getBooksFromCustomList
 }
