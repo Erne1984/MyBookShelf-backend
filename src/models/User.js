@@ -4,6 +4,7 @@ const ListSchema = require("./List").schema;
 const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: String,
+    realname: String, 
     username: String,
     imgUserUrl: String,
     toReadList: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }],

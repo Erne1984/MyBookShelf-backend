@@ -1,9 +1,11 @@
 const User = require("../../models/User");
+const mongoose = require("mongoose");
 
 const updatedUser = async (req, res) => {
     try {
         const userId = req.params.id;
         const updateData = req.body;
+
 
         if (!mongoose.Types.ObjectId.isValid(userId)) {
             return res.status(400).send({ error: "ID inválido" });
