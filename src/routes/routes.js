@@ -38,6 +38,7 @@ routes.post("/editBookDescri", BookController.editBookDescri);
 
 // AUTHOR ROUTES
 routes.get("/getAuthor", AuthorController.getAuthor);
+routes.get("/findAuthorById", AuthorController.findAuthorById);
 routes.get("/getAuthorWorks", AuthorController.getAuthorWorks);
 
 // REVIEW ROUTES
