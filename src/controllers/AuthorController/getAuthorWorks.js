@@ -1,59 +1,30 @@
 const Book = require("../../models/Book");
+const Author = require("../../models/Author");
 
 const getAuthorWorks = async (req, res) => {
     try {
-        const authorKey = req.query.authorKey;
+        const { authorId } = req.query;
 
-        if (!authorKey) throw new Error("Author key not defined");
+        if (!authorId) throw new Error("Author ID not defined");
 
-        const response = await fetch(`https://openlibrary.org/authors/${authorKey}/works.json?limit=10`);
+        const author = await Author.findById(authorId).populate('works');
 
-        if (!response.ok) throw new Error("Error in fetching data from API: " + response.statusText);
+        if (!author) throw new Error("Author not found");
 
-        const works = await response.json();
+        const authorWorks = author.works;
 
-        const sortedWorks = await Promise.all(
-            works.entries.map(async (work) => {
-                const openlibraryKey = work.key.slice(7);
+        if (!authorWorks || authorWorks.length === 0) {
+            return res.status(404).send({ message: "No works found for this author" });
+        }
 
-                if (!openlibraryKey) return null;
+        const books = await Book.find({
+            '_id': { $in: authorWorks }
+        }).sort({ score: -1 });
 
-                let existingBook = await Book.findOne({ 'identifiers.openlibrary': openlibraryKey });
-
-                if (!existingBook) {
-                    const description = typeof work.description === 'string'
-                        ? work.description
-                        : JSON.stringify(work.description) || "Descrição não disponível";
-
-                    const newBook = new Book({
-                        identifiers: {
-                            isbn_10: "",
-                            isbn_13: "",
-                            openlibrary: [work.key],
-                        },
-                        bookDescri: description,
-                        reviews: [],
-                        ratings: [],
-                        score: 0,
-                    });
-
-                    existingBook = await newBook.save();
-                }
-
-                return {
-                    ...work,
-                    score: existingBook.score,
-                };
-            })
-        );
-
-        const validWorks = sortedWorks.filter(work => work !== null);
-        validWorks.sort((a, b) => b.score - a.score);
-
-        res.send(validWorks.slice(0, 5));
+        res.send(books.slice(0, 5));
 
     } catch (err) {
-        console.error("Error in fetching author: ", err.message);
+        console.error("Error in fetching author works: ", err.message);
         res.status(500).send({ error: err.message });
     }
 }
