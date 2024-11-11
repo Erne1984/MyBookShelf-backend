@@ -4,6 +4,7 @@ const getBooks = require("./getBooks");
 const queryBookByName = require("./queryBookByName");
 const editBookDescri = require(".//editBookDescri");
 const getBooksByIds = require("./getBooksByIds");
+const getBestRatedBooks = require("./getBestRatedBooks");
 
 module.exports = {
     createBook,
@@ -11,5 +12,6 @@ module.exports = {
     getBooks,
     queryBookByName,
     editBookDescri,
-    getBooksByIds
+    getBooksByIds,
+    getBestRatedBooks
 }
