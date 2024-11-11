@@ -40,6 +40,7 @@ routes.post("/editBookDescri", BookController.editBookDescri);
 routes.get("/getAuthor", AuthorController.getAuthor);
 routes.get("/findAuthorById", AuthorController.findAuthorById);
 routes.get("/getAuthorWorks", AuthorController.getAuthorWorks);
+routes.put("/updateAuthor", AuthorController.updateAuthor);
 
 // REVIEW ROUTES
 routes.post("/createReviews", ReviewController.createReviews);
