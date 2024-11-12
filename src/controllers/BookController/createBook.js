@@ -1,41 +1,58 @@
+const mongoose = require("mongoose");
+const Author = require("../../models/Author");
 const Book = require("../../models/Book");
 
 const createBook = async (req, res) => {
-    try {
-        const { isbn10, isbn13, openlibraryKey, title, authors, numberOfPages, bookDescri, publishers, publish_date, subjects, cover } = req.body;
+  const {
+    title,
+    authors,
+    identifiers,
+    numberOfPages,
+    bookDescri,
+    publishers,
+    publish_date,
+    subjects,
+    cover,
+  } = req.body;
 
-        console.log(req.body)
+  try {
+    const newBook = new Book({
+      title,
+      authors,
+      identifiers,
+      numberOfPages,
+      bookDescri,
+      publishers,
+      publish_date,
+      subjects,
+      cover,
+      score: 0,
+    });
+    
+    await newBook.save();
 
-        if (!isbn10 && !isbn13 && !openlibraryKey) {
-            return res.status(400).send({ error: "No ID for the book was received" });
-        }
+    for (let authorData of authors) {
+      const authorName = authorData.name;
 
-        const newBookReference = new Book({
-            authors,
-            identifiers: {
-                isbn_10: [isbn10],
-                isbn_13: [isbn13],
-                openlibrary: [openlibraryKey]
-            },
-            title,
-            numberOfPages,
-            bookDescri,
-            publishers,
-            publish_date,
-            subjects,
-            cover,
-            reviews: [],
-            ratings: [],
-            score: 0
+      let author = await Author.findOne({ name: authorName });
+
+      if (author) {
+        author.works.push(newBook._id);
+      } else {
+        author = new Author({
+          name: authorName,
+          works: [newBook._id],
         });
-
-        await newBookReference.save();
-
-        res.status(201).send(newBookReference);
-    } catch (error) {
-        console.error("Error creating book reference: ", error);
-        res.status(500).send({ error: error.message });
+      }
+      
+      await author.save();
     }
+
+    res.status(201).json({ message: "Livro e autor(es) adicionados com sucesso!", book: newBook });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erro ao adicionar o livro e autor(es)." });
+  }
 };
 
 module.exports = createBook;
