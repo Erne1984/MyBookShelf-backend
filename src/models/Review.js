@@ -5,6 +5,7 @@ const reviewSchema = new mongoose.Schema({
     bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Book' },  
     content: String,
     ratingId: { type: mongoose.Schema.Types.ObjectId, ref: 'Rating' },  
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     createdAt: {
         type: Date,
         default: Date.now
