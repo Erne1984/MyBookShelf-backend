@@ -31,7 +31,7 @@ routes.put("/updateUser/:id", UserController.updateUser);
 routes.post("/toggleFollowUser", UserController.toggleFollowUser);
 
 // BOOK ROUTES
-routes.get("/queryBook", BookController.queryBookByName);
+routes.get("/queryBooks", BookController.queryBookByName);
 routes.get("/getBooks", BookController.getBooks);
 routes.get("/getBookIsbn", BookController.getBookByIsbn);
 routes.get("/getBestRatedBooks", BookController.getBestRatedBooks);
@@ -40,6 +40,7 @@ routes.post("/createBook", BookController.createBook);
 routes.post("/editBookDescri", BookController.editBookDescri);
 
 // AUTHOR ROUTES
+routes.get("/queryAuthors", AuthorController.searchAuthorByName);
 routes.get("/getAuthor", AuthorController.getAuthor);
 routes.get("/findAuthorById", AuthorController.findAuthorById);
 routes.get("/getAuthorWorks", AuthorController.getAuthorWorks);

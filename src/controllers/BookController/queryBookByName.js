@@ -12,11 +12,7 @@ const queryBookByName = async (req, res) => {
         const filteredBooks = await Book.find({ title: { $regex: query, $options: "i" } })
             .limit(limit);
 
-        if (filteredBooks.length === 0) {
-            return res.status(404).send({ error: "No books found matching the query." });
-        }
-
-        res.status(200).send({ books: filteredBooks });
+        res.status(200).send(filteredBooks);
     } catch (error) {
         console.error("Error fetching data: ", error);
         res.status(500).send({ error: "Internal server error" });
