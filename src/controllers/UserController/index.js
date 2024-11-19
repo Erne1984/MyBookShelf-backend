@@ -4,8 +4,10 @@ const deleteUser = require("./deleteUser");
 const updateUser = require("./updateUser");
 const loginUser = require("./loginUser");
 const getUserProfile = require("./getUserProfile");
-const getUserId = require("./getUserId");
+const UserrId = require("./UserrId");
+const getUserById = require("./getUserById");
 const uploadUserImg = require("./uploadUserImg");
+const toggleFollowUser = require("./toogleFollowUser");
 
 module.exports = {
     getUsers,
@@ -14,6 +16,8 @@ module.exports = {
     updateUser,
     loginUser,
     getUserProfile,
-    getUserId,
-    uploadUserImg
+    UserrId,
+    getUserById,
+    uploadUserImg,
+    toggleFollowUser
 };

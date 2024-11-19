@@ -14,6 +14,8 @@ const userSchema = new mongoose.Schema({
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     ratingsReference: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rating' }],
     friendsReference: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    followingUsersReference: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    followingAuthorsReference: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Authors' }],
     dateBirth: Date,
     country: String,
     city: String,

@@ -21,12 +21,14 @@ routes.get("/", (req, res) => {
 // USER ROUTES
 routes.get("/getUsers", UserController.getUsers);
 routes.get('/profile', verifyToken, UserController.getUserProfile);
-routes.get("/user/id", verifyToken, UserController.getUserId)
+routes.get("/user/id", verifyToken, UserController.UserrId);
+routes.get("/getUserById", UserController.getUserById);
 routes.post("/login", UserController.loginUser);
 routes.post("/createUser", UserController.createUser);
 routes.post("/uploadImage", verifyToken, upload.single('image'), UserController.uploadUserImg);
 routes.delete("/deleteUser/:id", UserController.deleteUser);
 routes.put("/updateUser/:id", UserController.updateUser);
+routes.post("/toggleFollowUser", UserController.toggleFollowUser);
 
 // BOOK ROUTES
 routes.get("/queryBook", BookController.queryBookByName);
