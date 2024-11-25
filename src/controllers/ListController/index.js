@@ -8,6 +8,7 @@ const removeBookOfList = require("./removeBookOfList");
 const getAllBooksUser = require("./getAllBooksUser");
 const getCustomListsUser = require("./getCustomListsUser");
 const getBooksFromCustomList = require("./getBooksFromCustomList");
+const deleteList = require("./deleteList");
 
 module.exports = {
     addUserBookStatus,
@@ -19,5 +20,6 @@ module.exports = {
     removeBookOfList,
     getAllBooksUser,
     getCustomListsUser,
-    getBooksFromCustomList
+    getBooksFromCustomList,
+    deleteList
 }

@@ -16,7 +16,7 @@ const createList = async (req, res) => {
         const newList = List({
             userId: userId,
             name: listname,
-            booksIsbn: booksIsbn,
+            booksIsbn: booksIsbn || [],
             public: public,
         })
 
