@@ -53,6 +53,7 @@ routes.get("/getUserReview", ReviewController.getUserReview);
 routes.put("/updateReview", ReviewController.updateReview);
 routes.put("/giveReviewAlike", ReviewController.giveReviewALike);
 routes.delete("/deleteReview", ReviewController.deleteReview);
+routes.post('/classifyReview', ReviewController.classifyReview);
 
 // LIST ROUTES 
 routes.get("/getUserLists", ListController.getUserList);

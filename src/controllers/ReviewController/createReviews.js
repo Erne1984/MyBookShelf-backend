@@ -1,3 +1,4 @@
+const { classifyReview } = require('../../services/mlService');
 const mongoose = require('mongoose');
 const Review = require("../../models/Review");
 const Rating = require("../../models/Rating");
@@ -24,11 +25,12 @@ const createReviews = async (req, res) => {
         if (!book) {
             return res.status(404).send({ error: "Book not found" });
         }
-
+        const classification = await classifyReview(content);
         const newReview = new Review({
             userId,
             bookId: book._id,
-            content
+            content,
+            classification
         });
         await newReview.save({ session });
 

@@ -21,6 +21,7 @@ const getBookReviews = async (req, res) => {
             ratingId: review.ratingId ? review.ratingId._id : null,
             score: review.ratingId ? review.ratingId.score : null,
             content: review.content,
+            classification: review.classification,
             createdAt: review.createdAt,
         }));
 
