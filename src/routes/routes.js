@@ -50,6 +50,7 @@ routes.put("/updateAuthor", AuthorController.updateAuthor);
 routes.post("/createReviews", ReviewController.createReviews);
 routes.get("/getBookReviews", ReviewController.getBookReviews);
 routes.get("/getUserReview", ReviewController.getUserReview);
+routes.get("/getFilteredReviews", ReviewController.filterReviewsbyClassificition);
 routes.put("/updateReview", ReviewController.updateReview);
 routes.put("/giveReviewAlike", ReviewController.giveReviewALike);
 routes.delete("/deleteReview", ReviewController.deleteReview);

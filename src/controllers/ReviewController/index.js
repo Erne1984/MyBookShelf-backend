@@ -5,6 +5,7 @@ const updateReview = require("./updateReview");
 const deleteReview = require("./deleteReview");
 const giveReviewALike = require("./giveReviewALike");
 const classifyReview = require('./classifyReview');
+const filterReviewsbyClassificition = require("./filterReviewsbyClassificition");
 
 
 module.exports = {
@@ -14,5 +15,6 @@ module.exports = {
     updateReview,
     deleteReview,
     giveReviewALike,
-    classifyReview
+    classifyReview,
+    filterReviewsbyClassificition
 }
