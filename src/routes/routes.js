@@ -8,6 +8,7 @@ const ReviewController = require("../controllers/ReviewController/index");
 const ListController = require("../controllers/ListController/index");
 const RatingController = require("../controllers/RatingController/index");
 const AuthorController = require("../controllers/AuthorController/index");
+const ReplyController = require("../controllers/ReplyController/index");
 
 const multer = require('multer');
 const isModerator = require("../middlewares/isModerator");
@@ -55,6 +56,10 @@ routes.put("/updateReview", ReviewController.updateReview);
 routes.put("/giveReviewAlike", ReviewController.giveReviewALike);
 routes.delete("/deleteReview", ReviewController.deleteReview);
 routes.post('/classifyReview', ReviewController.classifyReview);
+
+// REPLY ROUTES
+routes.post("/addReply", ReplyController.addReply);
+routes.get("/getReplys", ReplyController.getReplys);
 
 // LIST ROUTES 
 routes.get("/getUserLists", ListController.getUserList);
