@@ -33,16 +33,16 @@
 ## Mockups e Imagens
 
 ### Landing Page
-![Foto da Landing Page](./public/assets/land-page.png)
+![Foto da Landing Page](./src/public/assets/land-page.png)
 
 ### Catálogo de Livros
-![Foto do catálogo](./public/assets/catolog.png)
+![Foto do catálogo](./src/public/assets/catolog.png)
 
 ### Página do Livro
-![Foto da página de livro](./public/assets/book-page.png)
+![Foto da página de livro](./src/public/assets/book-page.png)
 
 ### Perfil do Usuário
-![Foto da tela do usuário](./public/assets/user-profile.png)
+![Foto da tela do usuário](./src/public/assets/user-profile.png)
 
 ---
 
